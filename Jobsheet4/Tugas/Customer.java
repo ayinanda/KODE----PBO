@@ -7,7 +7,7 @@ public class Customer {
     private String nama;
     private String phoneNumber;
     private String email;
-    private List<Reservation> reservations;
+    private ArrayList<Reservation> reservations;
 
     public Customer(String idCustomer, String nama, String phoneNumber, String email) {
         this.idCustomer = idCustomer;
@@ -20,11 +20,7 @@ public class Customer {
         this.reservations.add(reservation);
     }
     public String getCustomerInfo() {
-        return "ID: " + idCustomer + 
-               "\nNama: " + nama + 
-               "\nTelepon: " + phoneNumber + 
-               "\nEmail: " + email + 
-               "\nJumlah Reservasi: " + reservations.size();
+        return "ID: " + idCustomer + "\nNama: " + nama + "\nTelepon: " + phoneNumber + "\nEmail: " + email + "\nJumlah Reservasi: " + reservations.size();
     }
     public void updateMembershipLevel() {
         System.out.println("Membership level updated for customer: " + nama);
@@ -42,7 +38,7 @@ public class Customer {
         return email;
     }
 
-    public List<Reservation> getReservations() {
+    public ArrayList<Reservation> getReservations() {
         return reservations;
     }
 }

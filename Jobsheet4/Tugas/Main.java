@@ -1,7 +1,6 @@
 package Jobsheet4.Tugas;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,11 +16,10 @@ public class Main {
             
             manager.addCustomer(customer1);
             manager.addCustomer(customer2);
-    
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date tanggalReservasi = sdf.parse("2025-01-15");
 
-            List<Meja> availableTables = manager.checkAvailability(tanggalReservasi, 4);
+            Date tanggalReservasi = new Date(); 
+
+            ArrayList<Meja> availableTables = manager.checkAvailability(tanggalReservasi, 4);
             System.out.println("Meja tersedia untuk 4 orang:");
             for (Meja table : availableTables) {
                 System.out.println("- " + table.getTableInfo());
@@ -29,25 +27,23 @@ public class Main {
         
             if (!availableTables.isEmpty()) {
                 Reservation reservasi = manager.createReservation(
-                    customer1, 
-                    availableTables.get(0), 
-                    tanggalReservasi, 
-                    4
+                customer1, 
+                availableTables.get(0), 
+                tanggalReservasi, 4
                 );
                 
-                if (reservasi != null) {
+            if (reservasi != null) {
             
-                    reservasi.confirmReservation();
-                    
-                    reservasi.addToBill(250000);
-                    System.out.println("\nInformasi Reservasi:");
-                    System.out.println(reservasi.getReservationInfo());
-                }
-            }
+            reservasi.confirmReservation();
+            reservasi.addToBill(250000);
+            System.out.println("\nInformasi Reservasi:");
+            System.out.println(reservasi.getReservationInfo());
+        }
+    }
             System.out.println("\n" + manager.generateDailyReport());
             System.out.println("\nInformasi Customer:");
             System.out.println(customer1.getCustomerInfo());
-        }
+        } 
         catch (Exception e) {
             e.printStackTrace();
         }

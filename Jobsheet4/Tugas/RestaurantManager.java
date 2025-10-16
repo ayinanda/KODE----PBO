@@ -2,13 +2,12 @@ package Jobsheet4.Tugas;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class RestaurantManager {
     private String restaurantName;
-    private List<Customer> customers;
-    private List<Meja> tables;
-    private List<Reservation> reservations;
+    private ArrayList<Customer> customers;
+    private ArrayList<Meja> tables;
+    private ArrayList<Reservation> reservations;
 
     public RestaurantManager(String restaurantName) {
         this.restaurantName = restaurantName;
@@ -17,16 +16,9 @@ public class RestaurantManager {
         this.reservations = new ArrayList<>();
     }
     public Reservation createReservation(Customer customer, Meja meja, Date tanggal, int jumlahTamu) {
-        if (meja.isAvailableAt(tanggal, "18:00-20:00")) { 
+        if (meja.isAvailableAt(tanggal)) { 
             double deposit = jumlahTamu * 50000; 
-            Reservation newReservation = new Reservation(
-                "RES" + (reservations.size() + 1),
-                customer,
-                meja,
-                tanggal,
-                jumlahTamu,
-                deposit
-            );
+            Reservation newReservation = new Reservation("RES" + (reservations.size() + 1), customer, meja, tanggal, jumlahTamu, deposit);
             reservations.add(newReservation);
             customer.addReservation(newReservation);
             meja.addReservation(newReservation);
@@ -38,10 +30,10 @@ public class RestaurantManager {
             return null;
         }
     }
-    public List<Meja> checkAvailability(Date tanggal, int jumlahTamu) {
-        List<Meja> availableTables = new ArrayList<>();
+    public ArrayList<Meja> checkAvailability(Date tanggal, int jumlahTamu) {
+        ArrayList<Meja> availableTables = new ArrayList<>();
         for (Meja table : tables) {
-            if (table.isAvailableAt(tanggal, "18:00-20:00") && table.getKapasitas() >= jumlahTamu) {
+            if (table.isAvailableAt(tanggal) && table.getKapasitas() >= jumlahTamu) {
                 availableTables.add(table);
             }
         }
@@ -53,17 +45,13 @@ public class RestaurantManager {
         double totalRevenue = 0;
         
         for (Reservation res : reservations) {
-            if (res.isConfirmed()) {
+            if (res.iskonfirmasi()) {
                 confirmedReservations++;
                 totalRevenue += res.getTotalBill();
             }
         }
         
-        return "Laporan Harian " + restaurantName +
-               "\nTotal Reservasi: " + totalReservations +
-               "\nReservasi Terkonfirmasi: " + confirmedReservations +
-               "\nPendapatan: Rp" + totalRevenue +
-               "\nMeja Tersedia: " + (tables.size() - confirmedReservations) + "/" + tables.size();
+        return "Laporan Harian " + restaurantName +"\nTotal Reservasi: " + totalReservations +"\nReservasi Terkonfirmasi: " + confirmedReservations +"\nPendapatan: Rp" + totalRevenue +"\nMeja Tersedia: " + (tables.size() - confirmedReservations) + "/" + tables.size();
     }
 
     public void addCustomer(Customer customer) {
@@ -75,13 +63,13 @@ public class RestaurantManager {
     public String getRestaurantName() {
         return restaurantName;
     }
-    public List<Customer> getCustomers() {
+    public ArrayList<Customer> getCustomers() {
         return customers;
     }
-    public List<Meja> getTables() {
+    public ArrayList<Meja> getTables() {
         return tables;
     }
-    public List<Reservation> getReservations() {
+    public ArrayList<Reservation> getReservations() {
         return reservations;
     }
 }

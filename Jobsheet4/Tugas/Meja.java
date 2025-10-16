@@ -2,7 +2,6 @@ package Jobsheet4.Tugas;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Meja {
     private String idMeja;
@@ -10,7 +9,7 @@ public class Meja {
     private int kapasitas;
     private String lokasi;
     private String tipeMeja;
-    private List<Reservation> reservations;
+    private ArrayList<Reservation> reservations;
 
     public Meja(String idMeja, String nomorMeja, int kapasitas, String lokasi, String tipeMeja) {
         this.idMeja = idMeja;
@@ -21,20 +20,18 @@ public class Meja {
         this.reservations = new ArrayList<>();
     }
     public String getTableInfo() {
-        return "Meja " + nomorMeja + 
-               " - Kapasitas: " + kapasitas + 
-               " orang, Lokasi: " + lokasi + 
-               ", Tipe: " + tipeMeja;
+    String status = reservations.isEmpty() ? "Kosong" : "Sudah ada reservasi";
+    return "Meja " + nomorMeja + " - Kapasitas: " + kapasitas + " orang, Lokasi: " + lokasi + ", Tipe: " + tipeMeja + " | Status: " + status;
     }
-    public boolean isAvailableAt(Date tanggal, String timeSlot) {
-        for (Reservation reservation : reservations) {
-            if (reservation.getReservationDate().equals(tanggal)) {
-                return false;
+    public boolean isAvailableAt(Date tanggal) {
+    for (Reservation reservation : reservations) {
+        if (reservation.getReservationDate().equals(tanggal)) {
+            return false;
             }
         }
         return true; 
     }
-    public List<Reservation> getReservations() {
+    public ArrayList<Reservation> getReservations() {
         return reservations;
     }
     public void addReservation(Reservation reservation) {
