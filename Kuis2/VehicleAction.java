@@ -1,0 +1,3 @@
+interface VehicleAction {
+    void run();
+}
